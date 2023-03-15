@@ -3,6 +3,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MathGame extends JFrame implements ActionListener {
     private JTextField answerField;
@@ -43,12 +45,22 @@ public class MathGame extends JFrame implements ActionListener {
 
         answerField = new JTextField();
         answerField.setFont(answerField.getFont().deriveFont(24f));
-// testing       answerField.addActionListener(KeyEvent.VK_ENTER == 0 ? submitButton : null);
+        answerField.requestFocus();
+//        answerField.addActionListener(KeyEvent.VK_ENTER == 0 ? submitButton.addActionListener(this) : null);
+        answerField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    actionPerformed(new ActionEvent(submitButton, ActionEvent.ACTION_PERFORMED, null));
+                }
+            }
+        });
         gamePanel.add(answerField);
 
         submitButton = new JButton("Verifică");
         submitButton.setFont(submitButton.getFont().deriveFont(24f));
         submitButton.addActionListener(this);
+//        submitButton.setMnemonic(KeyEvent.VK_ENTER);
         gamePanel.add(submitButton);
 
         resultLabel = new JLabel("");
@@ -112,6 +124,7 @@ public class MathGame extends JFrame implements ActionListener {
                 } else {
                     feedbackLabel.setText("Mai încearcă, răspunsul nu este corect.");
                     feedbackLabel.setForeground(Color.BLUE);
+                    answerField.setText("");
                 }
             } catch (NumberFormatException ex) {
                 feedbackLabel.setText("Răspunsul nu este valid. Încearcă să introduci un număr");
