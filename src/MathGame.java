@@ -14,6 +14,14 @@ public class MathGame extends JFrame implements ActionListener {
     private int maxNum, num1, num2, result;
     Random random = new Random();
 
+    public JLabel getNum1Label() {
+        return num1Label;
+    }
+
+    public JLabel getNum2Label() {
+        return num2Label;
+    }
+
     public MathGame(int maxNum) {
 
         this.maxNum = maxNum;
@@ -106,6 +114,10 @@ public class MathGame extends JFrame implements ActionListener {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+
+
+
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -118,6 +130,11 @@ public class MathGame extends JFrame implements ActionListener {
 //                    resultLabel.setText("Rezultat: " + result);
                     num1 = random.nextInt(maxNum);
                     num2 = random.nextInt(maxNum - num1);
+                    while(Integer.parseInt(num1Label.getText()) == num1 &&
+                    Integer.parseInt(num2Label.getText()) == num2) {
+                        num1 = random.nextInt(maxNum);
+                        num2 = random.nextInt(maxNum - num1);
+                    }
                     result = num1 + num2;
                     num1Label.setText("" + num1);
                     num2Label.setText("" + num2);
