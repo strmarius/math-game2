@@ -43,6 +43,7 @@ public class MathGame extends JFrame implements ActionListener {
 
         answerField = new JTextField();
         answerField.setFont(answerField.getFont().deriveFont(24f));
+// testing       answerField.addActionListener(KeyEvent.VK_ENTER == 0 ? submitButton : null);
         gamePanel.add(answerField);
 
         submitButton = new JButton("Verifică");
