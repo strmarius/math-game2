@@ -5,17 +5,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class MathGame extends JFrame implements ActionListener {
     private JTextField answerField;
     private JLabel num1Label, num2Label, resultLabel, feedbackLabel;
     private JButton submitButton, resetButton;
     private int maxNum, num1, num2, result;
+    Random random = new Random();
 
     public MathGame(int maxNum) {
+
         this.maxNum = maxNum;
-        num1 = (int) (Math.random() * (maxNum + 1));
-        num2 = (int) (Math.random() * (maxNum + 1));
+        num1 = random.nextInt(maxNum);
+        num2 = random.nextInt(maxNum - num1);
         result = num1 + num2;
 
         setTitle("MaHAHAte");
@@ -113,9 +116,8 @@ public class MathGame extends JFrame implements ActionListener {
                     feedbackLabel.setText("Corect. Bravo!");
                     feedbackLabel.setForeground(Color.ORANGE);
 //                    resultLabel.setText("Rezultat: " + result);
-
-                    num1 = (int) (Math.random() * (maxNum + 1));
-                    num2 = (int) (Math.random() * (maxNum + 1));
+                    num1 = random.nextInt(maxNum);
+                    num2 = random.nextInt(maxNum - num1);
                     result = num1 + num2;
                     num1Label.setText("" + num1);
                     num2Label.setText("" + num2);
@@ -131,8 +133,8 @@ public class MathGame extends JFrame implements ActionListener {
                 feedbackLabel.setForeground(Color.RED);
             }
         } else if (e.getSource() == resetButton) {
-            num1 = (int) (Math.random() * (maxNum + 1));
-            num2 = (int) (Math.random() * (maxNum + 1));
+            num1 = random.nextInt(maxNum);
+            num2 = random.nextInt(maxNum - num1);
             result = num1 + num2;
             num1Label.setText("" + num1);
             num2Label.setText("" + num2);
@@ -144,7 +146,7 @@ public class MathGame extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        int maxNum = Integer.parseInt(JOptionPane.showInputDialog("Numărul maxim generat:"));
+        int maxNum = Integer.parseInt(JOptionPane.showInputDialog("Operații până la numărul: "));
         MathGame game = new MathGame(maxNum);
     }
 
