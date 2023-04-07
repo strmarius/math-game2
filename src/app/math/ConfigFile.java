@@ -8,6 +8,9 @@ public class ConfigFile {
     private int fileMinNum, fileMaxNum;
     private String fileUser;
 
+    ConfigFile() throws IOException {
+        readFile();
+    }
     public void setFileMinNum(int fileMinNum) {
         this.fileMinNum = fileMinNum;
     }
@@ -41,13 +44,13 @@ public class ConfigFile {
             Properties prop = new Properties();
             prop.load(reader);
 
-            if(prop.getProperty("minNum").isEmpty()) {
+            if(prop.getProperty("minNum").isEmpty() || prop.getProperty("minNum") == null) {
                 setFileMinNum(0);
             } else {
                 setFileMinNum(Integer.parseInt(prop.getProperty("minNum")));
             }
 
-            if(prop.getProperty("maxNum").isEmpty()) {
+            if(prop.getProperty("maxNum").isEmpty() || prop.getProperty("maxNum") == null) {
                 setFileMaxNum(10);
             } else {
                 setFileMaxNum(Integer.parseInt(prop.getProperty("maxNum")));
