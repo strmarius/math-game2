@@ -123,15 +123,14 @@ public class UI extends JFrame {
         //minNum
         JMenuItem configMin = new JMenuItem("Numărul minim  ");
         configMin.addActionListener(e -> {
-            minNum = Integer.parseInt(JOptionPane.showInputDialog("Operațiile sunt generate de la "
+            int minInput = Integer.parseInt(JOptionPane.showInputDialog("Operațiile sunt generate de la "
                     + random.getMinNum() + " la " + random.getMaxNum() + ".\n\nIntrodu valoarea nouă pentru minim: "));
-            random.setMinNum(minNum);
-
-            while (random.getMinNum() < 0 || random.getMinNum() > random.getMaxNum()) {
+            while (minInput < 0 || minInput > random.getMaxNum()) {
                 JOptionPane.showMessageDialog(null, "Numărul trebuie să fie pozitiv și mai mic decât "
                         + random.getMaxNum());
-                random.setMinNum(Integer.parseInt(JOptionPane.showInputDialog("Introdu valoarea nouă pentru minim: ")));
+                minInput = (Integer.parseInt(JOptionPane.showInputDialog("Introdu valoarea nouă pentru minim: ")));
             }
+            random.setMinNum(minInput);
         });
         configMin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
         config.add(configMin);
@@ -139,13 +138,13 @@ public class UI extends JFrame {
         //maxNum
         JMenuItem configMax = new JMenuItem("Numărul maxim  ");
         configMax.addActionListener(e -> {
-            random.setMaxNum(Integer.parseInt(JOptionPane.showInputDialog("Operațiile sunt generate de la " + random.getMinNum() + " la " + random.getMaxNum() +
-                    ".\n\nIntrodu valoarea nouă pentru maxim: ")));
-
-            while (random.getMaxNum() <= 1) {
+            int maxInput = Integer.parseInt(JOptionPane.showInputDialog("Operațiile sunt generate de la " + random.getMinNum() + " la " + random.getMaxNum() +
+                    ".\n\nIntrodu valoarea nouă pentru maxim: "));
+            while (maxInput < 2 || maxInput <= random.getMinNum()) {
                 JOptionPane.showMessageDialog(null, "Numărul trebuie să fie mai mare sau egal cu 2");
-                random.setMaxNum(Integer.parseInt(JOptionPane.showInputDialog("Introdu valoarea nouă pentru maxim: ")));
+                maxInput = (Integer.parseInt(JOptionPane.showInputDialog("Introdu valoarea nouă pentru maxim: ")));
             }
+            random.setMaxNum(maxInput);
         });
         configMax.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0));
         config.add(configMax);
@@ -167,8 +166,13 @@ public class UI extends JFrame {
 
         //Despre aplicatie menu
         JMenuItem despre = new JMenuItem("Despre ...");
-        despre.addActionListener(e -> JOptionPane.showMessageDialog(null, about.aboutApp()
-                , "Despre ...", JOptionPane.INFORMATION_MESSAGE));
+        despre.addActionListener(e -> {
+            JTextArea textArea = new JTextArea(about.aboutApp());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(600, 500));
+            JOptionPane.showMessageDialog(null, scrollPane, "Despre ...", JOptionPane.INFORMATION_MESSAGE);
+        });
         aboutApp.add(despre);
 
         this.setJMenuBar(menuBar);

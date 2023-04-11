@@ -41,6 +41,9 @@ public record AboutAppText() {
                 - Improve UI with new colors
                 - Extend feedback label for better readability
                 - Add table score
+                - Solve a bug(setMin and setMax num in menuBar were set even if condition occur with an error
+                        Solution: Register userInput in a var before set de min/max)
+                - Add scroll bar to this menu because of long content
                 
                 """;
     }
